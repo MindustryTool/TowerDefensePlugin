@@ -16,27 +16,27 @@ public class TowerDefensePathFinder extends Pathfinder {
             Blocks.darkPanel4, //
             Blocks.darkPanel5, //
             Blocks.darkPanel6, //
-            Blocks.metalFloor,//
-            Blocks.metalFloor2,//
-            Blocks.metalFloor3,//
-            Blocks.metalFloor4,//
-            Blocks.metalFloor5,//
-            Blocks.metalTiles1,//
-            Blocks.metalTiles2,//
-            Blocks.metalTiles4,//
-            Blocks.metalTiles5,//
-            Blocks.metalTiles6,//
-            Blocks.metalTiles7,//
-            Blocks.metalTiles8,//
-            Blocks.metalTiles9,//
-            Blocks.metalTiles10,//
-            Blocks.metalTiles11,//
-            Blocks.metalTiles12,//
-            Blocks.metalTiles13,//
-            Blocks.metalFloorDamaged,//
-            Blocks.water,//
-            Blocks.deepwater,//
-            Blocks.taintedWater,//
+            Blocks.metalFloor, //
+            Blocks.metalFloor2, //
+            Blocks.metalFloor3, //
+            Blocks.metalFloor4, //
+            Blocks.metalFloor5, //
+            Blocks.metalTiles1, //
+            Blocks.metalTiles2, //
+            Blocks.metalTiles4, //
+            Blocks.metalTiles5, //
+            Blocks.metalTiles6, //
+            Blocks.metalTiles7, //
+            Blocks.metalTiles8, //
+            Blocks.metalTiles9, //
+            Blocks.metalTiles10, //
+            Blocks.metalTiles11, //
+            Blocks.metalTiles12, //
+            Blocks.metalTiles13, //
+            Blocks.metalFloorDamaged, //
+            Blocks.water, //
+            Blocks.deepwater, //
+            Blocks.taintedWater, //
             Blocks.redStone//
     );
 
@@ -71,11 +71,13 @@ public class TowerDefensePathFinder extends Pathfinder {
             if (other == null)
                 continue;
 
+            var isOtherPath = isPath(other);
+
             if (other.floor().isLiquid)
                 nearLiquid = true;
-            if (other.solid() || !isPath(other))
+            if (other.solid() || !isOtherPath)
                 nearSolid = true;
-            if (other.legSolid() || !isPath(other))
+            if (other.legSolid() || !isOtherPath)
                 nearLegSolid = true;
             if (!other.floor().isLiquid)
                 nearGround = true;
@@ -85,17 +87,19 @@ public class TowerDefensePathFinder extends Pathfinder {
                 nearDeep = true;
         }
 
+        var isTilePath = isPath(tile);
+
         return PathTile.get(0, //
                 tile.getTeamID(), //
-                tile.solid(), //
+                tile.solid() || !isTilePath, //
                 tile.floor().isLiquid, //
-                tile.legSolid(), //
+                tile.legSolid() || !isTilePath, //
                 nearLiquid,
                 nearGround, //
                 nearSolid, //
                 nearLegSolid, //
-                tile.floor().isDeep() || !isPath(tile), //
-                tile.floor().damageTaken > 0f || !isPath(tile), //
+                tile.floor().isDeep() || !isTilePath, //
+                tile.floor().damageTaken > 0f || !isTilePath, //
                 allDeep, //
                 nearDeep,
                 tile.block().teamPassable);
