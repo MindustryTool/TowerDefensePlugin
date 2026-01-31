@@ -1,11 +1,41 @@
 package towerdefense;
 
+import arc.struct.Seq;
 import mindustry.ai.Pathfinder;
 import mindustry.content.Blocks;
 import mindustry.gen.PathTile;
+import mindustry.world.Block;
 import mindustry.world.Tile;
 
 public class TowerDefensePathFinder extends Pathfinder {
+
+    public static final Seq<Block> paths = Seq.with(//
+            Blocks.darkPanel1, //
+            Blocks.darkPanel2, //
+            Blocks.darkPanel3, //
+            Blocks.darkPanel4, //
+            Blocks.darkPanel5, //
+            Blocks.darkPanel6, //
+            Blocks.metalFloor,//
+            Blocks.metalFloor2,//
+            Blocks.metalFloor3,//
+            Blocks.metalFloor4,//
+            Blocks.metalFloor5,//
+            Blocks.metalTiles1,//
+            Blocks.metalTiles2,//
+            Blocks.metalTiles4,//
+            Blocks.metalTiles5,//
+            Blocks.metalTiles6,//
+            Blocks.metalTiles7,//
+            Blocks.metalTiles8,//
+            Blocks.metalTiles9,//
+            Blocks.metalTiles10,//
+            Blocks.metalTiles11,//
+            Blocks.metalTiles12,//
+            Blocks.metalTiles13,//
+            Blocks.metalFloorDamaged,//
+            Blocks.redStone//
+    );
 
     public static final int impassable = -1, notPath = 999999;
 
@@ -64,11 +94,11 @@ public class TowerDefensePathFinder extends Pathfinder {
                 tile.floor().isDeep() || !isPath(tile), //
                 tile.floor().damageTaken > 0f || !isPath(tile), //
                 allDeep, //
-                nearDeep, 
+                nearDeep,
                 tile.block().teamPassable);
     }
 
     public static boolean isPath(Tile tile) {
-        return tile.floor() == Blocks.darkPanel4 || tile.floor() == Blocks.darkPanel5;
+        return paths.contains(tile.floor());
     }
 }
