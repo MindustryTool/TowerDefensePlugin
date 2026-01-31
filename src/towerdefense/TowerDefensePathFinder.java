@@ -34,6 +34,9 @@ public class TowerDefensePathFinder extends Pathfinder {
             Blocks.metalTiles12,//
             Blocks.metalTiles13,//
             Blocks.metalFloorDamaged,//
+            Blocks.water,//
+            Blocks.deepwater,//
+            Blocks.taintedWater,//
             Blocks.redStone//
     );
 
