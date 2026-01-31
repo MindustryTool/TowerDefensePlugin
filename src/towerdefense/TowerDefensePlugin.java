@@ -154,7 +154,7 @@ public class TowerDefensePlugin extends Plugin {
                         Items.oxide, 120, Items.carbide, 240, Items.surgeAlloy, 120, Items.thorium, 240,
                         Items.phaseFabric, 250),
 
-                UnitTypes.merui, ItemStack.list(Items.beryllium, 25, Items.silicon, 35, Items.tungsten, 10),
+                UnitTypes.merui, ItemStack.list(Items.beryllium, 25, Items.silicon, 35, Items.graphite, 10),
                 UnitTypes.cleroi,
                 ItemStack.list(Items.beryllium, 35, Items.graphite, 20, Items.silicon, 25, Items.tungsten, 20,
                         Items.oxide, 20),
