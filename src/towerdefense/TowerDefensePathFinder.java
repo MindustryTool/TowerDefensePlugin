@@ -10,31 +10,9 @@ import mindustry.world.Tile;
 public class TowerDefensePathFinder extends Pathfinder {
 
     public static final Seq<Block> paths = Seq.with(//
-            Blocks.darkPanel1, //
-            Blocks.darkPanel2, //
-            Blocks.darkPanel3, //
-            Blocks.darkPanel4, //
-            Blocks.darkPanel5, //
-            Blocks.darkPanel6, //
-            Blocks.metalFloor, //
-            Blocks.metalFloor2, //
-            Blocks.metalFloor3, //
-            Blocks.metalFloor4, //
-            Blocks.metalFloor5, //
-            Blocks.metalTiles1, //
-            Blocks.metalTiles2, //
-            Blocks.metalTiles4, //
-            Blocks.metalTiles5, //
-            Blocks.metalTiles6, //
-            Blocks.metalTiles7, //
-            Blocks.metalTiles8, //
-            Blocks.metalTiles9, //
-            Blocks.metalTiles10, //
-            Blocks.metalTiles11, //
-            Blocks.metalTiles12, //
-            Blocks.metalTiles13, //
-            Blocks.metalFloorDamaged, //
-            Blocks.redStone//
+            
+            Blocks.darkPanel5 //
+            
     );
 
     public static final int impassable = -1, notPath = 999999;
