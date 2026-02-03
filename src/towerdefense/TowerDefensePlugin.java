@@ -8,6 +8,7 @@ import arc.util.*;
 import mindustry.Vars;
 import mindustry.ai.types.FlyingAI;
 import mindustry.ai.types.GroundAI;
+import mindustry.ai.types.SuicideAI;
 import mindustry.content.Blocks;
 import mindustry.content.Fx;
 import mindustry.content.Items;
@@ -274,6 +275,7 @@ public class TowerDefensePlugin extends Plugin {
 
         Events.on(ServerLoadEvent.class, event -> {
             Vars.content.units().each(unit -> {
+                unit.aiController = SuicideAI::new;
                 unit.weapons.add(new Weapon() {
                     {
                         shootOnDeath = true;
