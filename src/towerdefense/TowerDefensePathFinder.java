@@ -1,19 +1,11 @@
 package towerdefense;
 
-import arc.struct.Seq;
 import mindustry.ai.Pathfinder;
 import mindustry.content.Blocks;
 import mindustry.gen.PathTile;
-import mindustry.world.Block;
 import mindustry.world.Tile;
 
 public class TowerDefensePathFinder extends Pathfinder {
-
-    public static final Seq<Block> paths = Seq.with(//
-            
-            Blocks.darkPanel5 //
-            
-    );
 
     public static final int impassable = -1, notPath = 999999;
 
@@ -64,7 +56,7 @@ public class TowerDefensePathFinder extends Pathfinder {
 
         var isTilePath = isPath(tile);
 
-        return PathTile.get(0, //
+        return PathTile.get(isTilePath ? 0 : 10000, //
                 tile.getTeamID(), //
                 tile.solid() || !isTilePath, //
                 tile.floor().isLiquid, //
@@ -81,6 +73,6 @@ public class TowerDefensePathFinder extends Pathfinder {
     }
 
     public static boolean isPath(Tile tile) {
-        return paths.contains(tile.floor());
+        return Blocks.darkPanel5 == tile.floor();
     }
 }
