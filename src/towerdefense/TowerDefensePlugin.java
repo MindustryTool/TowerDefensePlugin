@@ -9,20 +9,25 @@ import mindustry.Vars;
 import mindustry.ai.types.FlyingAI;
 import mindustry.ai.types.GroundAI;
 import mindustry.content.Blocks;
+import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.StatusEffects;
 import mindustry.content.UnitTypes;
+import mindustry.entities.bullet.BulletType;
 import mindustry.game.EventType.PlayEvent;
+import mindustry.game.EventType.ServerLoadEvent;
 import mindustry.game.EventType.UnitDestroyEvent;
 import mindustry.game.EventType.UnitSpawnEvent;
 import mindustry.game.EventType.WaveEvent;
 import mindustry.game.EventType.WorldLoadEvent;
 import mindustry.gen.Call;
 import mindustry.gen.Groups;
+import mindustry.gen.Sounds;
 import mindustry.mod.*;
 import mindustry.net.Administration.ActionType;
 import mindustry.type.ItemStack;
 import mindustry.type.UnitType;
+import mindustry.type.Weapon;
 import mindustry.world.Block;
 import mindustry.world.Tile;
 import mindustry.world.blocks.defense.ShockMine;
@@ -265,6 +270,40 @@ public class TowerDefensePlugin extends Plugin {
 
             event.unit.damageMultiplier(0f);
             event.unit.apply(StatusEffects.disarmed, Float.POSITIVE_INFINITY);
+        });
+
+        Events.on(ServerLoadEvent.class, event -> {
+            Vars.content.units().each(unit -> {
+                unit.weapons.add(new Weapon() {
+                    {
+                        shootOnDeath = true;
+                        reload = 24f;
+                        shootCone = 180f;
+                        ejectEffect = Fx.none;
+                        shootSound = Sounds.explosionCrawler;
+                        shootSoundVolume = 0.4f;
+                        x = shootY = 0f;
+                        mirror = false;
+                        bullet = new BulletType() {
+                            {
+                                collidesTiles = false;
+                                collides = false;
+
+                                rangeOverride = 25f;
+                                hitEffect = Fx.pulverize;
+                                speed = 0f;
+                                splashDamageRadius = 44f;
+                                instantDisappear = true;
+                                splashDamage = 80f;
+                                killShooter = true;
+                                hittable = false;
+                                collidesAir = true;
+                            }
+                        };
+                    }
+                });
+                unit.targetUnderBlocks = false;
+            });
         });
     }
 
