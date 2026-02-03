@@ -276,6 +276,9 @@ public class TowerDefensePlugin extends Plugin {
         Events.on(ServerLoadEvent.class, event -> {
             Vars.content.units().each(unit -> {
                 unit.aiController = SuicideAI::new;
+                Seq<Weapon> copy = new Seq<>(unit.weapons);
+                unit.weapons.clear();
+
                 unit.weapons.add(new Weapon() {
                     {
                         shootOnDeath = true;
@@ -304,6 +307,7 @@ public class TowerDefensePlugin extends Plugin {
                         };
                     }
                 });
+                unit.weapons.addAll(copy);
                 unit.targetUnderBlocks = false;
             });
         });
