@@ -29,6 +29,15 @@ public class TowerDefensePathFinder extends Pathfinder {
                 (team, tile) -> (PathTile.solid(tile) || !PathTile.liquid(tile) ? notPath : 1)
                         + (PathTile.damages(tile) ? 50 : 0) + (PathTile.nearSolid(tile) ? 10 : 0)
                         + (PathTile.nearGround(tile) ? 10 : 0) + PathTile.health(tile) * 999999);
+
+        costTypes.set(costHover,
+                (team, tile) -> (((PathTile.team(tile) == team && !PathTile.teamPassable(tile))
+                        || PathTile.team(tile) == 0) && PathTile.solid(tile)) ? impassable
+                                : 1 +
+                                        PathTile.health(tile) * 5 +
+                                        (PathTile.nearSolid(tile) ? 2 : 0)
+                                        + PathTile.health(tile) * 999999);
+
     }
 
     @Override
