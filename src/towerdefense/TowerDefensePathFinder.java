@@ -7,7 +7,7 @@ import mindustry.world.Tile;
 
 public class TowerDefensePathFinder extends Pathfinder {
 
-    public static final int impassable = -1, notPath = 9999;
+    public static final int impassable = -1, notPath = 99999;
 
     public TowerDefensePathFinder() {
         costTypes.set(costGround,
@@ -17,18 +17,18 @@ public class TowerDefensePathFinder extends Pathfinder {
                                         : 1 + (PathTile.deep(tile) ? notPath : 0) + (PathTile.damages(tile) ? 50 : 0)
                                                 + (PathTile.nearSolid(tile) ? 50 : 0)
                                                 + (PathTile.nearLiquid(tile) ? 10 : 0)
-                                                + PathTile.health(tile));
+                                                + PathTile.health(tile) * notPath);
 
         costTypes.set(costLegs,
                 (team, tile) -> PathTile.legSolid(tile) ? impassable
                         : 1 + (PathTile.deep(tile) ? notPath : 0) + (PathTile.damages(tile) ? 50 : 0)
                                 + (PathTile.nearLegSolid(tile) ? 50 : 0) + (PathTile.nearSolid(tile) ? 10 : 0)
-                                + PathTile.health(tile));
+                                + PathTile.health(tile) * notPath);
 
         costTypes.set(costNaval,
                 (team, tile) -> (PathTile.solid(tile) || !PathTile.liquid(tile) ? notPath : 1)
                         + (PathTile.damages(tile) ? 50 : 0) + (PathTile.nearSolid(tile) ? 10 : 0)
-                        + (PathTile.nearGround(tile) ? 10 : 0) + PathTile.health(tile));
+                        + (PathTile.nearGround(tile) ? 10 : 0) + PathTile.health(tile) * notPath);
 
         costTypes.set(costHover,
                 (team, tile) -> (((PathTile.team(tile) == team && !PathTile.teamPassable(tile))
@@ -36,7 +36,7 @@ public class TowerDefensePathFinder extends Pathfinder {
                                 : 1 +
                                         PathTile.health(tile) * 5 +
                                         (PathTile.nearSolid(tile) ? 2 : 0)
-                                        + PathTile.health(tile));
+                                        + PathTile.health(tile) * notPath);
 
     }
 

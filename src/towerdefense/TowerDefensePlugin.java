@@ -8,7 +8,6 @@ import arc.util.*;
 import mindustry.Vars;
 import mindustry.ai.types.FlyingAI;
 import mindustry.ai.types.GroundAI;
-import mindustry.content.Blocks;
 import mindustry.content.Items;
 import mindustry.content.StatusEffects;
 import mindustry.content.UnitTypes;
@@ -27,7 +26,6 @@ import mindustry.world.Block;
 import mindustry.world.Tile;
 import mindustry.world.blocks.defense.ShockMine;
 import mindustry.world.blocks.storage.CoreBlock;
-import mindustry.world.blocks.units.UnitBlock;
 import mindustry.world.meta.BlockFlag;
 
 public class TowerDefensePlugin extends Plugin {
@@ -222,15 +220,15 @@ public class TowerDefensePlugin extends Plugin {
                 .clamp(((Vars.state.wave * Vars.state.wave / 3200f) + 0.5f), multiplier, 100f));
 
         Events.on(PlayEvent.class, event -> {
-            Vars.state.rules.bannedBlocks.addAll(Vars.content.blocks().select(UnitBlock.class::isInstance));
-            Vars.state.rules.bannedBlocks.remove(Blocks.airFactory);
-            Vars.state.rules.bannedBlocks.remove(Blocks.additiveReconstructor);
-            Vars.state.rules.bannedBlocks.remove(Blocks.multiplicativeReconstructor);
+            // Vars.state.rules.bannedBlocks.addAll(Vars.content.blocks().select(UnitBlock.class::isInstance));
+            // Vars.state.rules.bannedBlocks.remove(Blocks.airFactory);
+            // Vars.state.rules.bannedBlocks.remove(Blocks.additiveReconstructor);
+            // Vars.state.rules.bannedBlocks.remove(Blocks.multiplicativeReconstructor);
 
-            Vars.state.rules.bannedUnits.addAll(Vars.content.units().select(type -> !type.hidden));
-            Vars.state.rules.bannedUnits.remove(UnitTypes.mono);
-            Vars.state.rules.bannedUnits.remove(UnitTypes.poly);
-            Vars.state.rules.bannedUnits.remove(UnitTypes.mega);
+            // Vars.state.rules.bannedUnits.addAll(Vars.content.units().select(type -> !type.hidden));
+            // Vars.state.rules.bannedUnits.remove(UnitTypes.mono);
+            // Vars.state.rules.bannedUnits.remove(UnitTypes.poly);
+            // Vars.state.rules.bannedUnits.remove(UnitTypes.mega);
         });
 
         Events.on(UnitDestroyEvent.class, event -> {
