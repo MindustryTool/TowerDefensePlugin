@@ -7,7 +7,7 @@ import mindustry.world.Tile;
 
 public class TowerDefensePathFinder extends Pathfinder {
 
-    public static final int impassable = -1, notPath = 999999;
+    public static final int impassable = -1, notPath = 9999;
 
     public TowerDefensePathFinder() {
         costTypes.set(costGround,
@@ -17,18 +17,18 @@ public class TowerDefensePathFinder extends Pathfinder {
                                         : 1 + (PathTile.deep(tile) ? notPath : 0) + (PathTile.damages(tile) ? 50 : 0)
                                                 + (PathTile.nearSolid(tile) ? 50 : 0)
                                                 + (PathTile.nearLiquid(tile) ? 10 : 0)
-                                                + PathTile.health(tile) * 999999);
+                                                + PathTile.health(tile));
 
         costTypes.set(costLegs,
                 (team, tile) -> PathTile.legSolid(tile) ? impassable
                         : 1 + (PathTile.deep(tile) ? notPath : 0) + (PathTile.damages(tile) ? 50 : 0)
                                 + (PathTile.nearLegSolid(tile) ? 50 : 0) + (PathTile.nearSolid(tile) ? 10 : 0)
-                                + PathTile.health(tile) * 999999);
+                                + PathTile.health(tile));
 
         costTypes.set(costNaval,
                 (team, tile) -> (PathTile.solid(tile) || !PathTile.liquid(tile) ? notPath : 1)
                         + (PathTile.damages(tile) ? 50 : 0) + (PathTile.nearSolid(tile) ? 10 : 0)
-                        + (PathTile.nearGround(tile) ? 10 : 0) + PathTile.health(tile) * 999999);
+                        + (PathTile.nearGround(tile) ? 10 : 0) + PathTile.health(tile));
 
         costTypes.set(costHover,
                 (team, tile) -> (((PathTile.team(tile) == team && !PathTile.teamPassable(tile))
@@ -36,7 +36,7 @@ public class TowerDefensePathFinder extends Pathfinder {
                                 : 1 +
                                         PathTile.health(tile) * 5 +
                                         (PathTile.nearSolid(tile) ? 2 : 0)
-                                        + PathTile.health(tile) * 999999);
+                                        + PathTile.health(tile));
 
     }
 
@@ -50,13 +50,11 @@ public class TowerDefensePathFinder extends Pathfinder {
             if (other == null)
                 continue;
 
-            var isOtherPath = isPath(other);
-
             if (other.floor().isLiquid)
                 nearLiquid = true;
-            if (other.solid() || !isOtherPath)
+            if (other.solid())
                 nearSolid = true;
-            if (other.legSolid() || !isOtherPath)
+            if (other.legSolid())
                 nearLegSolid = true;
             if (!other.floor().isLiquid)
                 nearGround = true;
@@ -70,15 +68,15 @@ public class TowerDefensePathFinder extends Pathfinder {
 
         return PathTile.get(isTilePath ? 0 : 10000, //
                 tile.getTeamID(), //
-                tile.solid() || !isTilePath, //
+                tile.solid(), //
                 tile.floor().isLiquid, //
-                tile.legSolid() || !isTilePath, //
+                tile.legSolid(), //
                 nearLiquid,
                 nearGround, //
                 nearSolid, //
                 nearLegSolid, //
-                tile.floor().isDeep() || !isTilePath, //
-                tile.floor().damageTaken > 0f || !isTilePath, //
+                tile.floor().isDeep(), //
+                tile.floor().damageTaken > 0f, //
                 allDeep, //
                 nearDeep,
                 tile.block().teamPassable);
