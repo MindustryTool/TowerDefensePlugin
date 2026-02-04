@@ -12,14 +12,15 @@ public class TowerDefensePathFinder extends Pathfinder {
     public TowerDefensePathFinder() {
         costTypes.set(costGround,
                 (team, tile) -> (PathTile.allDeep(tile)
-                        || ((PathTile.team(tile) == 0 || PathTile.team(tile) == team) && PathTile.solid(tile)))
-                                ? impassable
-                                : 1 + (PathTile.deep(tile) ? notPath : 0) + (PathTile.damages(tile) ? 50 : 0)
-                                        + (PathTile.nearSolid(tile) ? 50 : 0) + (PathTile.nearLiquid(tile) ? 10 : 0)
-                                        + PathTile.health(tile) * 999999);
+                        || ((PathTile.team(tile) == team && !PathTile.teamPassable(tile)) || PathTile.team(tile) == 0)
+                                && PathTile.solid(tile)) ? impassable
+                                        : 1 + (PathTile.deep(tile) ? notPath : 0) + (PathTile.damages(tile) ? 50 : 0)
+                                                + (PathTile.nearSolid(tile) ? 50 : 0)
+                                                + (PathTile.nearLiquid(tile) ? 10 : 0)
+                                                + PathTile.health(tile) * 999999);
 
         costTypes.set(costLegs,
-                (team, tile) -> (PathTile.allDeep(tile) || PathTile.legSolid(tile)) ? impassable
+                (team, tile) -> PathTile.legSolid(tile) ? impassable
                         : 1 + (PathTile.deep(tile) ? notPath : 0) + (PathTile.damages(tile) ? 50 : 0)
                                 + (PathTile.nearLegSolid(tile) ? 50 : 0) + (PathTile.nearSolid(tile) ? 10 : 0)
                                 + PathTile.health(tile) * 999999);
