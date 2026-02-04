@@ -36,7 +36,7 @@ public class TowerDefensePlugin extends Plugin {
 
     @Override
     public void init() {
-        new TowerDefensePathFinder();
+        Vars.pathfinder = new TowerDefensePathFinder();
 
         drops = ObjectMap.of(UnitTypes.crawler, ItemStack.list(Items.copper, 20, Items.lead, 10, Items.silicon, 3),
                 UnitTypes.atrax,
